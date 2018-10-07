@@ -1,9 +1,10 @@
 var express = require("express");
 var bodyParser = require("body-parser");
-var routes = require("./routes.js");
+var routes = require("./routes/routes.js");
+var compression = require('compression')
 var app = express();
 
-
+app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
