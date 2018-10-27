@@ -31,7 +31,11 @@ const adSchema = mongoose.Schema({
 const Ad = module.exports = mongoose.model('Ad', adSchema);
 
 // Get Ads
-
 module.exports.getAds = (callback, limit) => {
     Ad.find(callback).limit(limit);
+}
+
+// Add Ads
+module.exports.addAd = (ad, callback) => {
+    Ad.create(ad, callback);
 }
