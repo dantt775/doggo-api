@@ -1,19 +1,28 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const compression = require('compression')
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const app = express();
 
+Ad = require('./models/ad');
 
-const routes = require("./routes/routes.js");
+mongoose.connect('mongodb://doggo-db:doggoapi123#@ds143603.mlab.com:43603/doggo-db', { useNewUrlParser: true });
+let db = mongoose.connection;
 
-app.use(compression());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
-routes.insertAds(app);
-routes.returnAds(app);
-
-var server = app.listen(3003, function () {
-  console.log("app running on port.", server.address().port);
+app.get('/', (req, res)=>{
+  res.send('Please use /api/doggo');
 });
 
+app.get('/api/doggo/anuncios', (req, res)=>{
+  Ad.getAds((err, ads)=>{
+    if(err){
+      throw err;
+    }
+    res.json(ads);
+  })
+
+})
+
+
+app.listen(3001, ()=>{
+  console.log('\n| Running on port 3001 |\n');
+});
