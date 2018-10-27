@@ -5,7 +5,7 @@ const app = express();
 
 Ad = require('./models/ad');
 
-mongoose.connect('mongodb://doggo-db:doggoapi123#@ds143603.mlab.com:43603/doggo-db', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/doggo-db', { useNewUrlParser: true });
 let db = mongoose.connection;
 
 app.get('/', (req, res)=>{
