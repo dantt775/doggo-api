@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
 
-const databaseUri = require('./database/databaseUri')
-
+const databaseUri = require('./database/databaseUri');
+const adsRoutes = require('./routes/adsRoutes');
 
 let port = process.env.PORT || 8080;
 
@@ -32,50 +32,23 @@ app.use(
 );
 */
 
-Ad = require('./models/ad');
+
 
 mongoose.connect(databaseUri, { useNewUrlParser: true });
-//let db = mongoose.connection;
 
+// Default route
 app.get('/', (req, res)=>{
   res.send('Please use /api/doggo');
 });
 
-// Get ads
-app.get('/api/doggo/anuncios', (req, res)=>{
-  Ad.getAds((err, ads)=>{
-    if(err){
-      throw err;
-    }
-    res.json(ads);
-  })
+// Ads Routes
+adsRoutes.getAdsRoute(app);
+adsRoutes.addAdsRoute(app);
+adsRoutes.updateAdRoute(app);
 
-})
 
-// Add ads
-app.post('/api/doggo/anuncios', (req, res)=>{
-  var ad = req.body;
-  Ad.addAd(ad, (err, ad)=>{
-    if(err){
-      throw err;
-    }
-    res.json(ad);
-  })
 
-})
 
-// Update ad
-app.put('/api/doggo/anuncios/:id', (req, res)=>{
-  var adId = req.params.id;
-  var updatedAd = req.body;
-  Ad.updateAd(adId, updatedAd, (err, ad)=>{
-    if(err){
-      throw err;
-    }
-    res.json(updatedAd);
-  })
-
-})
 
 
 app.listen(port, ()=>{
