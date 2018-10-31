@@ -2,13 +2,40 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
 
+const databaseUri = require('./database/databaseUri')
+
+
+let port = process.env.PORT || 8080;
+
+
+//  MW's
+app.use(cors());
 app.use(bodyParser.json());
+
+/*
+app.use(
+  (req,res,next) =>{
+    console.log('Via Header: ', typeof req.headers.token)
+
+    if(req.headers.token === '12345'){
+      console.log('igual');
+      next();
+    }else{
+      console.log('não é igual');
+      res.status(401).send('Token Inválido');
+    }
+
+    
+  }
+);
+*/
 
 Ad = require('./models/ad');
 
-mongoose.connect('mongodb://doggo-db:doggo-db123@ds143603.mlab.com:43603/doggo-db', { useNewUrlParser: true });
-let db = mongoose.connection;
+mongoose.connect(databaseUri, { useNewUrlParser: true });
+//let db = mongoose.connection;
 
 app.get('/', (req, res)=>{
   res.send('Please use /api/doggo');
@@ -37,7 +64,20 @@ app.post('/api/doggo/anuncios', (req, res)=>{
 
 })
 
+// Update ad
+app.put('/api/doggo/anuncios/:id', (req, res)=>{
+  var adId = req.params.id;
+  var updatedAd = req.body;
+  Ad.updateAd(adId, updatedAd, (err, ad)=>{
+    if(err){
+      throw err;
+    }
+    res.json(updatedAd);
+  })
 
-app.listen(3001, ()=>{
-  console.log('\n| Running on port 3001 |\n');
+})
+
+
+app.listen(port, ()=>{
+  console.log('\n| Magic happens at port '+port+' ._. |\n');
 });

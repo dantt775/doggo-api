@@ -39,3 +39,8 @@ module.exports.getAds = (callback, limit) => {
 module.exports.addAd = (ad, callback) => {
     Ad.create(ad, callback);
 }
+
+// Update Ada
+module.exports.updateAd = (adId, updatedAd, callback) => {
+    Ad.findOneAndUpdate(adId,{$set: updatedAd}, callback);    
+}
