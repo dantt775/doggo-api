@@ -1,43 +1,59 @@
-Ad = require('..//models/ad');
+Ad = require('../models/ad');
 
 // Get ads
 module.exports.getAdsRoute = (app) => {
-app.get('/api/doggo/anuncios', (req, res)=>{
-    Ad.getAds((err, ads)=>{
-      if(err){
-        throw err;
+  app.get('/api/doggo/anuncios', (req, res) => {
+    Ad.getAds((err, ads) => {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(ads);
       }
-      res.json(ads);
     })
-  
   })
 }
 
-  // Add ads
-  module.exports.addAdsRoute = (app) => {
-  app.post('/api/doggo/anuncios', (req, res)=>{
+// Get Ads by user
+module.exports.getAdsByUserRoute = (app) => {
+  app.get('/api/doggo/anuncios/usuario/:id', (req, res)=> {
+    let userId = req.params.id;
+    Ad.getAdsByUderId(userId, (err, ads)=>{
+      if(err){
+        res.json(err);
+      }else{
+        res.json(ads);
+      }
+    })
+  })
+}
+
+// Add ads
+module.exports.addAdsRoute = (app) => {
+  app.post('/api/doggo/anuncios', (req, res) => {
     var ad = req.body;
-    Ad.addAd(ad, (err, ad)=>{
-      if(err){
-        throw err;
+    usAd.addAd(ad, (err, ad) => {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(ad);
       }
-      res.json(ad);
     })
-  
+
   })
 }
 
-  // Update ad
-  module.exports.updateAdRoute = (app) => {
-  app.put('/api/doggo/anuncios/:id', (req, res)=>{
-    var adId = req.params.id;
-    var updatedAd = req.body;
-    Ad.updateAd(adId, updatedAd, (err, ad)=>{
-      if(err){
-        throw err;
+// Update ad
+module.exports.updateAdRoute = (app) => {
+  app.put('/api/doggo/anuncios/:id', (req, res) => {
+    let adId = req.params.id;
+    let updatedAd = req.body;
+    Ad.updateAd(adId, updatedAd, (err, ad) => {
+      if (err) {
+        res.json(err);
+      } else {
+        res.json(updatedAd);
       }
-      res.json(updatedAd);
     })
-  
+
   })
 }

@@ -6,38 +6,23 @@ const cors = require('cors');
 
 const databaseUri = require('./database/databaseUri');
 const adsRoutes = require('./routes/adsRoutes');
+const usersRoutes = require('./routes/usersRoutes');
 
-let port = process.env.PORT || 8080;
+let port = process.env.PORT || 3001;
 
 
 //  MW's
 app.use(cors());
 app.use(bodyParser.json());
 
-/*
-app.use(
-  (req,res,next) =>{
-    console.log('Via Header: ', typeof req.headers.token)
-
-    if(req.headers.token === '12345'){
-      console.log('igual');
-      next();
-    }else{
-      console.log('não é igual');
-      res.status(401).send('Token Inválido');
-    }
-
-    
-  }
-);
-*/
-
-
-
+app.use((req, res, next) => {
+  console.log('| Url chamada: ', req.url);
+  next();
+})
 mongoose.connect(databaseUri, { useNewUrlParser: true });
 
 // Default route
-app.get('/', (req, res)=>{
+app.get('/', (req, res) => {
   res.send('Please use /api/doggo');
 });
 
@@ -45,12 +30,14 @@ app.get('/', (req, res)=>{
 adsRoutes.getAdsRoute(app);
 adsRoutes.addAdsRoute(app);
 adsRoutes.updateAdRoute(app);
+adsRoutes.getAdsByUserRoute(app);
+// User Routes
+usersRoutes.getUsersRoute(app);
+usersRoutes.addUserRoute(app);
+usersRoutes.updateUserRoute(app);
+usersRoutes.getUserByIdRoute(app);
 
 
-
-
-
-
-app.listen(port, ()=>{
-  console.log('\n| Magic happens at port '+port+' ._. |\n');
+app.listen(port, () => {
+  console.log('\n| Magic happens at port ' + port + ' ._. |\n');
 });
