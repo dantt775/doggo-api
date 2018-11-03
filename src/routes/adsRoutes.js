@@ -30,7 +30,7 @@ module.exports.getAdsByUserRoute = (app) => {
 // Add ads
 module.exports.addAdsRoute = (app) => {
   app.post('/api/doggo/anuncios', (req, res) => {
-    var ad = req.body;
+    let ad = req.body;
     usAd.addAd(ad, (err, ad) => {
       if (err) {
         res.json(err);

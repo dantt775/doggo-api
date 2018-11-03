@@ -1,4 +1,8 @@
+const bcrypt = require('bcrypt');
+
 User = require('..//models/user');
+
+const SALT_ROUNDS = 10;
 
 // Get users
 module.exports.getUsersRoute = (app) => {
@@ -27,17 +31,47 @@ module.exports.getUserByIdRoute = (app) => {
     })
 }
 
+//Log in user
+module.exports.login = (app) => {
+    app.post('/login', (req, res) => {
+        let email = req.body.email;
+        let passwd = req.body.password;
+        User.login(email, passwd, (err, user) => {
+            if (err) {
+                res.json(err);
+            } else {
+                if (user.length == 0) {
+                    res.json('Usuário ou senha inválido');
+                } else {
+                    res.json(user);
+                }
+            }
+        })
+    })
+}
+
+
 // Add user
 module.exports.addUserRoute = (app) => {
     app.post('/api/doggo/usuarios', (req, res) => {
         let newUser = req.body;
-        User.addUser(newUser, (err, newUser) => {
+     //   bcrypt.hash(newUser.password, SALT_ROUNDS, (err, hash) => {
             if (err) {
                 res.json(err);
             } else {
-                res.json(newUser);
+                newUser.password = hash;
+                User.addUser(newUser, (err, newUser) => {
+                    if (err) {
+                        res.json(err);
+                    } else {
+                        res.json(newUser);
+                    }
+                })
             }
-        })
+
+      //  });
+
+
     })
 }
 

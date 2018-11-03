@@ -43,3 +43,7 @@ module.exports.addUser = (user, callback) => {
 module.exports.updateUser = (userId, updatedUser, callback) => {
     User.findOneAndUpdate(userId,{$set: updatedUser}, callback);    
 }
+
+module.exports.login = (email, passwd, callback) => {
+    User.find({email: email, password: passwd}, callback);
+}

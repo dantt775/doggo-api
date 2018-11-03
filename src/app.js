@@ -8,7 +8,7 @@ const databaseUri = require('./database/databaseUri');
 const adsRoutes = require('./routes/adsRoutes');
 const usersRoutes = require('./routes/usersRoutes');
 
-let port = process.env.PORT || 3001;
+const port = process.env.PORT || 3001;
 
 
 //  MW's
@@ -36,6 +36,8 @@ usersRoutes.getUsersRoute(app);
 usersRoutes.addUserRoute(app);
 usersRoutes.updateUserRoute(app);
 usersRoutes.getUserByIdRoute(app);
+//Login
+usersRoutes.login(app);
 
 
 app.listen(port, () => {
