@@ -10,6 +10,10 @@ const adSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    user_phone: {
+        type: String,
+        required: true,
+    },
     local: {
         type: String,
         required: true,
@@ -46,10 +50,15 @@ module.exports.addAd = (ad, callback) => {
 
 // Update Ada
 module.exports.updateAd = (adId, updatedAd, callback) => {
-    Ad.findOneAndUpdate(adId, { $set: updatedAd }, callback);
+    Ad.findOneAndUpdate({_id: adId}, { $set: updatedAd }, callback);
 }
 
 // Get Ads from user id
 module.exports.getAdsByUderId = (userId, callback) =>{
     Ad.find({user_id: userId}, callback);
+}
+
+// Get Ads by id
+module.exports.getAdsById = (id, callback)=>{
+    Ad.findById(id, callback);
 }

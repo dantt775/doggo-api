@@ -27,11 +27,22 @@ module.exports.getAdsByUserRoute = (app) => {
   })
 }
 
+// Get Ads by Id
+module.exports.getAdsByIdRoute = (app) =>{
+  app.get('/api/doggo/anuncios/:id', (req, res)=>{
+    let id = req.params.id;
+    Ad.getAdsById(id, (err, ad)=>{
+      if (err) res.json(err);
+      else  res.json(ad); 
+    })
+  })
+}
+
 // Add ads
 module.exports.addAdsRoute = (app) => {
   app.post('/api/doggo/anuncios', (req, res) => {
     let ad = req.body;
-    usAd.addAd(ad, (err, ad) => {
+    Ad.addAd(ad, (err, ad) => {
       if (err) {
         res.json(err);
       } else {

@@ -33,7 +33,7 @@ module.exports.getUserByIdRoute = (app) => {
 
 //Log in user
 module.exports.login = (app) => {
-    app.post('/login', (req, res) => {
+    app.post('/api/doggo/login', (req, res) => {
         let email = req.body.email;
         let passwd = req.body.password;
         User.login(email, passwd, (err, user) => {
@@ -56,10 +56,10 @@ module.exports.addUserRoute = (app) => {
     app.post('/api/doggo/usuarios', (req, res) => {
         let newUser = req.body;
      //   bcrypt.hash(newUser.password, SALT_ROUNDS, (err, hash) => {
-            if (err) {
-                res.json(err);
-            } else {
-                newUser.password = hash;
+         //   if (err) {
+        //        res.json(err);
+        //    } else {
+        //        newUser.password = hash;
                 User.addUser(newUser, (err, newUser) => {
                     if (err) {
                         res.json(err);
@@ -67,7 +67,7 @@ module.exports.addUserRoute = (app) => {
                         res.json(newUser);
                     }
                 })
-            }
+        //    }
 
       //  });
 

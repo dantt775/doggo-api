@@ -11,6 +11,7 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         lowercase: false,
+        required: true,
     },
     created: {
         type: Date,
@@ -19,6 +20,14 @@ const userSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
+    },
+    phone: {
+        type: String,
+        required: true,
+    },
+    img: {
+        type: String,
+        default: "https://i.imgur.com/06MikfZ.jpg"
     }
 });
 
@@ -41,7 +50,7 @@ module.exports.addUser = (user, callback) => {
 
 // Update user
 module.exports.updateUser = (userId, updatedUser, callback) => {
-    User.findOneAndUpdate(userId,{$set: updatedUser}, callback);    
+    User.findOneAndUpdate({_id: userId},{$set: updatedUser}, callback);    
 }
 
 module.exports.login = (email, passwd, callback) => {
