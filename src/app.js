@@ -25,10 +25,6 @@ mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 mongoose.connect(databaseUri, { useNewUrlParser: true });
 
-// Default route
-app.get('/', (req, res) => {
-  res.send('Please use /api/doggo');
-});
 
 // Ads Routes
 adsRoutes.getAdsRoute(app);
