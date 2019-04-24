@@ -9,7 +9,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 routes(app);
 
+funcaoTeste = () => {
+  return 'app running on port';
+}
+
+
+
 var server = app.listen(3003, function () {
-  console.log("app running on port.", server.address().port);
+  console.log( funcaoTeste(), server.address().port);
 });
 
