@@ -42,6 +42,6 @@ usersRoutes.login(app);
 
 
 app.listen(port, () => {
-  console.log('\n| Magic happens at port ' + port + ' ._. |\n');
+  console.log('\n| Magic happens at port :) ' + port + ' ._. |\n');
 });
 
